@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación a mi Graduación - Final</title>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ------------------------------------------- */
+        /* --- ESTILOS DE LA INVITACIÓN --- */
+        /* ------------------------------------------- */
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f0f0f0; 
+            color: #000000; 
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .invitation-container {
+            max-width: 650px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff; 
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1; 
+            color: #000000;
+        }
+        
+        h1, h2, .details p, .quote, h3, .details p strong { color: #000000 !important; }
+        
+        h1 { 
+            border-bottom: 3px solid #000000; 
+            padding-bottom: 10px;
+        }
+        
+        .quote { 
+            border-left: 5px solid #000000; 
+            padding: 10px 0 10px 15px;
+            margin: 30px auto;
+            max-width: 90%;
+            text-align: left;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #000000;
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        /* ------------------------------------------- */
+        /* --- ESTILOS DE LA CORTINA Y ANIMACIÓN --- */
+        /* ------------------------------------------- */
+        #curtain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999; /* ¡Máxima prioridad para cubrir todo! */
+            display: flex; /* Usamos flexbox para las tres partes */
+            opacity: 1; /* Valor inicial */
+            visibility: visible;
+            /* La imagen de fondo ahora está en el overlay completo, para ser revelada */
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/4b/Escudo_de_Nicaragua.svg'); 
+            background-size: auto 70vh; /* Ajusta el tamaño de la imagen según necesites */
+            background-repeat: no-repeat;
+            background-position: center center; /* Centra la imagen */
+        }
+
+        #curtain-left, #curtain-right {
+            flex-grow: 1; /* Estas partes azules ocuparán el espacio restante equitativamente */
+            height: 100%;
+            background-color: #004990; /* Azul Cobalt */
+            /* CAMBIO: Duración más larga y cubic-bezier para movimiento "ondulante" */
+            transition: transform 2.5s cubic-bezier(0.6, 0.05, 0.3, 1.5); 
+            box-sizing: border-box;
+        }
+
+        #curtain-center-stripe { /* NUEVO ELEMENTO: La franja blanca central */
+            width: 10vw; /* Ancho fijo para la franja blanca, como pediste "10" */
+            height: 100%;
+            background-color: white;
+            /* CAMBIO: Ajustamos la duración y el retraso para que coincida con las cortinas */
+            transition: opacity 1.5s ease-out 0.8s; 
+            z-index: 10000; /* Asegura que esté por encima de todo durante la transición */
+        }
+
+        /* --- Clase para iniciar la apertura de las mitades --- */
+        .curtain-open #curtain-left {
+            transform: translateX(-100%); /* Mueve la mitad izquierda fuera de la pantalla */
+        }
+        .curtain-open #curtain-right {
+            transform: translateX(100%); /* Mueve la mitad derecha fuera de la pantalla */
+        }
+        .curtain-open #curtain-center-stripe { /* NUEVA ANIMACIÓN para la franja blanca */
+            opacity: 0; /* Desvanece la franja blanca central */
+        }
+        
+        /* --- Clase para ocultar el contenedor COMPLETO después de la apertura --- */
+        .curtain-closed {
+             opacity: 0 !important;
+             visibility: hidden !important;
+             transition: opacity 0.5s ease-out; 
+        }
+
+
+        /* ------------------------------------------- */
+        /* --- ANIMACIÓN DE BIRRETES --- */
+        /* ------------------------------------------- */
+        .birrete {
+            position: fixed; 
+            top: -250px; 
+            background-image: url('https://uploads.onecompiler.io/4455fys5k/4455fzsr7/birrete%20bmm.jpg'); 
+            background-size: contain; 
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.9;
+            pointer-events: none; 
+            z-index: 9; 
+            animation-name: fall;
+            animation-timing-function: linear; 
+        }
+        
+        .birrete.active {
+            z-index: 999; /* Activamos el z-index alto para que caigan por encima de todo el contenido */
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-50px) rotateZ(0deg); opacity: 0.9; }
+            100% { transform: translateY(110vh) rotateZ(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="curtain-overlay">
+        <div id="curtain-left"></div>
+        <div id="curtain-center-stripe"></div> <!-- ¡NUEVO ELEMENTO PARA LA FRANJA BLANCA! -->
+        <div id="curtain-right"></div>
+    </div>
+
+    <div class="invitation-container">
+        <h1>¡Invitación a mi Graduación!</h1>
+        
+        <h2>Con Cariño, dedico este logro a mis pilares:</h2>
+        <p>A mis padres, familia y amigos, sin cuyo apoyo este sueño no sería una realidad.</p>
+        
+        <hr>
+        
+        <div class="details">
+            <p>🎉 Te invito a celebrar el fin de una etapa inolvidable y el comienzo de mi futuro.</p>
+            <p><strong>Día:</strong> [Día de la Semana], [Día] de [Mes] de [Año]</p>
+            <p><strong>Hora:</strong> [Hora]:00 p.m.</p>
+            <p><strong>Lugar:</strong> [Nombre del Salón o Evento], [Dirección]</p>
+        </div>
+
+        <div class="quote">\
+            "La educación es el vestido de gala para asistir a la fiesta de la vida."
+        </div>
+        
+        <h3>— [Tu Nombre Aquí y Carrera]</h3>
+    </div>
+
+    <script>
+        const bodyElement = document.body;
+        const initialBirreteCount = 7; // CAMBIO: Menos birretes al inicio
+        const overlay = document.getElementById('curtain-overlay');
+        let birreteCreationInterval;
+
+        // --- FUNCIONES DE BIRRETES ---
+        function createBirrete() {
+            const birrete = document.createElement('div');
+            birrete.classList.add('birrete', 'active'); 
+            
+            const randomSize = Math.random() * 100 + 70; 
+            const fixedDuration = Math.random() * 3 + 4; 
+            const randomX = Math.random() * window.innerWidth;
+            const randomDelay = Math.random() * 1; 
+            
+            birrete.style.left = `${randomX}px`;
+            birrete.style.width = `${randomSize}px`;
+            birrete.style.height = `${randomSize}px`;
+            birrete.style.animationDuration = `${fixedDuration}s`;
+            birrete.style.animationDelay = `${randomDelay}s`; 
+            
+            bodyElement.appendChild(birrete);
+
+            birrete.addEventListener('animationend', () => {
+                birrete.remove();
+                createBirrete(); 
+            });
+        }
+
+        function startBirreteRain() {
+            for (let i = 0; i < initialBirreteCount; i++) {
+                createBirrete();
+            }
+            // CAMBIO: Nuevos birretes cada 1.5 segundos (más espaciados)
+            birreteCreationInterval = setInterval(createBirrete, 1500); 
+        }
+
+        // --- CÓDIGO DE APERTURA DE CORTINA ---
+        window.addEventListener('load', function() {
+            // 1. Dispara la animación de apertura (mueve las mitades a los lados y desvanece la raya central)
+            overlay.classList.add('curtain-open');
+
+            // 2. Espera 2.6 segundos para que la animación de 2.5s termine.
+            setTimeout(function() {
+                // 3. Oculta el contenedor completo para que el contenido sea accesible y lanza la lluvia.
+                overlay.classList.add('curtain-closed');
+                startBirreteRain(); 
+            }, 2600); // CAMBIO: 2.5s de animación de transform + 0.1s de seguridad = 2600ms
+        });
+    </script>
+
+</body>
+</html>
